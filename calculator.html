@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .display {
+                padding-top: 100px;
+                padding-bottom: 15px;
+                align-content: center;
+                justify-content: center;
+                text-align: center;
+                height: 20px;
+            }
+            .grid-container {
+                display: grid;
+                grid-template-columns: repeat(4, 50px);
+                grid-template-rows: repeat(4, 50px);
+                align-content: center;
+                justify-content: center;
+                text-align: center;
+                
+            }
+        </style>
+    </head>
+    <body>
+        <title>Calculator</title>
+        <div id= "display" class="display"></div>
+        <div id="container" class="grid-container">
+            <button id="7">7</button>
+            <button id="8">8</button>
+            <button id="9">9</button>
+            <button id="/">/</button>
+            <button id="4">4</button>
+            <button id="5">5</button>
+            <button id="6">6</button>
+            <button id="*">*</button>
+            <button id="1">1</button>
+            <button id="2">2</button>
+            <button id="3">3</button> 
+            <button id="-">-</button>
+            <button id="0">0</button>         
+            <button id="+">+</button>         
+            <button id="=">=</button>
+            <button id="ac">AC</button>
+        </div>
+        <script>
+            let display = document.getElementById('display');
+            function add(a, b) {
+                display.textContent = a + b
+            }
+            function substract(a, b) {
+                display.textContent = a - b
+            }
+            function multiply(a, b) {
+                display.textContent = a * b;
+            }
+            function divide(a, b) {
+                display.textContent = a / b
+            }
+
+          function operate(op, a, b) {
+                if (op == "+") {
+                    add(a, b);                
+                } else if (op == "-") {
+                    substract(a, b);                  
+                } else if (op== "*") {
+                    multiply(a, b);       
+                } else if (op== "/") {
+                    divide(a, b);
+                }
+            } 
+            let regex = /(\+|-|\*|\/)/;
+            let operator;
+            let dataValue = ""
+
+            let buttons = document.querySelectorAll("button")
+            buttons.forEach((button) => {
+                button.addEventListener('click', function(e) {
+                    let text = button.textContent;
+                    if (text.match(regex)) {
+                        operator = text;
+                    }
+                    
+                    dataValue += text
+                    display.textContent = dataValue;
+                    if (text == "=") {
+                        let result = dataValue.slice(0, dataValue.length - 1);                        
+                        let solution = result.split(operator);
+                        operate(operator, parseInt(solution[0]), parseInt(solution[1]))
+                    }
+                    if (text == "AC") {
+                        dataValue = "";
+                        display.textContent = "";
+                    }
+                })
+            });
+        </script>
+    </body>
+</html>
